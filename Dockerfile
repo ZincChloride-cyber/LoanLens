@@ -20,7 +20,9 @@ COPY web ./web
 COPY models ./models
 COPY data/raw ./data/raw
 COPY reports ./reports
-RUN python -c "from src.common import load_data, file_hash, ROOT; from src.predict import load_artifact; load_data(); assert load_artifact()['raw_sha256'] == file_hash(ROOT / 'data/raw/train.csv')"
+# Raw CSV is not in Git; download at build time (Render, CI, fresh clones).
+RUN python -m src.download_data \
+    && python -c "from src.common import load_data, file_hash, ROOT; from src.predict import load_artifact; load_data(); assert load_artifact()['raw_sha256'] == file_hash(ROOT / 'data/raw/train.csv')"
 USER loanlens
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=45s \

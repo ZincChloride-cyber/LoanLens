@@ -1,0 +1,13 @@
+# Render Blueprint: New + Blueprint → connect repo with this file at repo root.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: loanlens
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: WEB_HOST
+        value: 0.0.0.0
+      - key: PYTHONUNBUFFERED
+        value: "1"
