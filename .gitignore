@@ -33,3 +33,5 @@ Thumbs.db
 # Large or generated files / local reproduction
 reports/reproduction_before.json
 data/raw/*.csv
+
+.vercel
